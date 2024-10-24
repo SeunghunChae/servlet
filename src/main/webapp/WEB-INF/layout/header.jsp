@@ -1,0 +1,32 @@
+<%@page contentType="text/html; charset=UTF-8"%>
+<%@page errorPage="errors/boardError.jsp"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>게시판 프로그램</title>
+</head>
+<body>
+
+<%
+	String userId = (String) session.getAttribute("userId");
+%>
+
+<hr>
+	<a href="/">Home</a>&nbsp;&nbsp;&nbsp;
+<% if(userId == null) { %>
+	<a href="insertUserView.do">회원가입</a>&nbsp;&nbsp;&nbsp;
+	<a href="loginView.do">로그인</a>&nbsp;&nbsp;&nbsp;
+<% } else { %>
+	<a href="getBoardList.do">글목록</a>&nbsp;&nbsp;&nbsp;
+	<a href="insertBoardView.do">글등록</a>&nbsp;&nbsp;&nbsp;
+	<a href="logout.do">로그아웃</a>&nbsp;&nbsp;&nbsp;
+<% } %>
+<hr>
+
+<br>
+
+
+
+
