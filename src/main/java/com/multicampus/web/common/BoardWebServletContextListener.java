@@ -4,11 +4,8 @@ import jakarta.servlet.ServletContextAttributeEvent;
 import jakarta.servlet.ServletContextAttributeListener;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
-import jakarta.servlet.annotation.WebListener;
-import jakarta.servlet.http.HttpSessionAttributeListener;
-import jakarta.servlet.http.HttpSessionListener;
 
-@WebListener
+//@WebListener
 public class BoardWebServletContextListener implements ServletContextListener, ServletContextAttributeListener {
 
     public BoardWebServletContextListener() {

@@ -19,6 +19,7 @@ public class BoardDAO {
 	// BOARD 테이블 관련 SQL 명령어
 	private static final String BOARD_INSERT = "insert into board(seq, title, writer, content) values((select max(seq) + 1 from board), ?, ?, ?)";
 	private static final String BOARD_UPDATE = "update board set title = ?, content = ? where seq = ?";
+	private static final String UPDATE_CTN   = "update board set cnt = cnt + 1 where seq = ?";
 	private static final String BOARD_DELETE = "delete board where seq = ?";
 	private static final String BOARD_GET    = "select * from board where seq = ?";
 	private static final String BOARD_LIST_T = "select * from board where title   like '%'||?||'%' order by seq desc";
@@ -79,7 +80,12 @@ public class BoardDAO {
 			stmt = conn.prepareStatement(BOARD_GET);
 			stmt.setInt(1, vo.getSeq());
 			rs = stmt.executeQuery();
-			while(rs.next()) {
+			if(rs.next()) {
+				// 검색 결과가 있을 때 조회수를 증가시킨다.
+				stmt = conn.prepareStatement(UPDATE_CTN);
+				stmt.setInt(1, vo.getSeq());
+				stmt.executeUpdate();
+				
 				board = new BoardVO();
 				board.setSeq(rs.getInt("SEQ"));
 				board.setTitle(rs.getString("TITLE"));

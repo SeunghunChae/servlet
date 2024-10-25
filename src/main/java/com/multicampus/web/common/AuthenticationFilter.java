@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -17,7 +18,8 @@ import jakarta.servlet.http.HttpSession;
 		                  "/getBoardList.do", 
 		                  "/getBoard.do"})
 public class AuthenticationFilter extends HttpFilter implements Filter {
-	
+	private static final long serialVersionUID = 1L;
+
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     	HttpServletRequest req = (HttpServletRequest) request;
     	HttpServletResponse res = (HttpServletResponse) response;
@@ -26,9 +28,10 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
     	HttpSession session = req.getSession();
     	
     	// 세션에 저장된 상태 정보 활용
-    	if(session.getAttribute("userId") == null) {
+    	if(session.getAttribute("user") == null) {
     		// 세션에 userId 정보가 없으면 로그인 인증을 안한 브라우저로 판단한다.
-    		res.sendRedirect("login.jsp");
+    		RequestDispatcher rd = req.getRequestDispatcher("loginView.do");
+    		rd.forward(req, res);
     	} else {
     		chain.doFilter(request, response);
     	}
